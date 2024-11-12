@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { TItemData } from '../../store/features/list'
+import type { TItemData } from '@/types'
 
 type TItemFormProps = {
   onSubmit: (data: TItemData) => void

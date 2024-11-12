@@ -1,9 +1,12 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
+
+import { listsReducer } from './features/lists'
 import { listReducer } from './features/list'
 
 export const store = configureStore({
   reducer: {
+    lists: listsReducer,
     list: listReducer
   }
 })

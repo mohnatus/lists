@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { List } from './containers/List';
+import { Lists } from '@/containers/Lists';
 
 export const App = () => {
 	return (
 		<div>
-			<List />
+			<Lists />
 		</div>
 	);
 };

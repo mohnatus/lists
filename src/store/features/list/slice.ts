@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { TItem, TItemData } from './types';
-import { getId } from '../../../utils/get-id';
+import { TItem, TItemData } from '@/types';
+import { getId } from '@/utils/get-id';
 
 export interface ListState {
 	items: Array<TItem>;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TItem } from '../../store/features/list';
+import type { TItem } from '@/types';
 
 type TItemProps = {
 	item: TItem;
