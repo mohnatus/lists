@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 
-import type { TListData } from '@/types';
-import { addList, getLists, selectLists } from '@/store/features/lists';
-import { useAppDispatch } from '@/store/hooks/useAppDispatch';
+import { useActiveLists, useAddList } from '@/db/hooks';
+import { TListFormData } from '@/types';
 import { ListForm } from '@/components/ListForm';
 import { List } from '@/components/List';
 
 export const Lists = () => {
-	const dispatch = useAppDispatch();
-	const lists = useSelector(selectLists);
+	const lists = useActiveLists();
+	const addList = useAddList();
 	const [isAddListFormOpen, setIsAddListFormOpen] = useState(false);
 
 	const openAddListForm = () => {
 		setIsAddListFormOpen(true);
 	};
 
-	const handleAddList = (data: TListData) => {
-		setIsAddListFormOpen(false);
-		dispatch(addList(data));
+	const handleAddList = async (data: TListFormData) => {
+		try {
+			const id = await addList(data);
+			setIsAddListFormOpen(false);
+		} catch (e) {
+			console.error(e);
+		}
 	};
-
-	useEffect(() => {
-		dispatch(getLists());
-	}, [dispatch]);
 
 	return (
 		<div>

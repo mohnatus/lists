@@ -11,9 +11,9 @@ const router = createBrowserRouter([
 		element: <Lists />,
 	},
 	{
-    path: "/list/:listId",
-    element: <List />,
-  },
+		path: '/list/:listId',
+		element: <List />,
+	},
 ]);
 
 export const App = () => {

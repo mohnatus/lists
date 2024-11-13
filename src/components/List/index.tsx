@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import type { TList } from '@/types';
+import { TList } from '@/db/types';
 
 type TListProps = {
 	list: TList;
 };
 
 export const List = ({ list }: TListProps) => {
-	return <div>{list.name}</div>;
+	return <Link to={`/list/${list.id}`}>{list.name}</Link>;
 };

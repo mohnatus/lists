@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import type { TListData } from '@/types';
+import { TListFormData } from '@/types';
 
 type TListFormProps = {
-	onSubmit: (data: TListData) => void;
+	onSubmit: (data: TListFormData) => void;
 };
 
 export const ListForm = ({ onSubmit }: TListFormProps) => {
@@ -12,7 +12,7 @@ export const ListForm = ({ onSubmit }: TListFormProps) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const data: TListData = {
+		const data: TListFormData = {
 			name,
 		};
 		onSubmit(data);
