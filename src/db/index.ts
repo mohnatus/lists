@@ -21,7 +21,7 @@ const db = new Dexie(DB_NAME) as Dexie & {
 };
 
 db.version(DB_VERSION).stores({
-	[LISTS_STORE_NAME]: '++id',
+	[LISTS_STORE_NAME]: '++id,order',
 	[ITEMS_STORE_NAME]: '++id,list',
 });
 

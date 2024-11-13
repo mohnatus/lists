@@ -3,7 +3,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { Lists } from '@/containers/Lists';
-import { List } from '@/containers/List';
+import { ListView } from '@/containers/ListView';
 
 const router = createBrowserRouter([
 	{
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/list/:listId',
-		element: <List />,
+		element: <ListView />,
 	},
 ]);
 

@@ -7,6 +7,6 @@ type TListProps = {
 	list: TList;
 };
 
-export const List = ({ list }: TListProps) => {
+export const ListItem = ({ list }: TListProps) => {
 	return <Link to={`/list/${list.id}`}>{list.name}</Link>;
 };

@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { List, arrayMove } from 'react-movable';
 
 import {
 	useAddItem,
 	useListData,
 	useListItems,
+	useSortItems,
 	useToggleItem,
 } from '@/db/hooks';
 import { TItemFormData } from '@/types';
-import { Item } from '@/components/Item';
-import { ItemForm } from '@/components/ItemForm';
+import { Item } from '@/containers/ListView/Item';
+import { ItemForm } from '@/containers/ListView/ItemForm';
 
-export const List = () => {
+export const ListView = () => {
 	const params = useParams();
 	const listId = Number(params.listId);
 
 	const addItem = useAddItem();
 	const toggleItem = useToggleItem();
+	const sortItems = useSortItems();
 
 	const list = useListData(listId);
 	const items = useListItems(listId);
@@ -47,6 +50,15 @@ export const List = () => {
 		}
 	};
 
+	const handleSort = ({ oldIndex, newIndex }) => {
+		try {
+			const newItems = arrayMove(items, oldIndex, newIndex);
+			sortItems(newItems.map((item) => item.id));
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	if (!list) {
 		return (
 			<div>
@@ -59,18 +71,24 @@ export const List = () => {
 	return (
 		<div>
 			<h1>List {list.name}</h1>
-			<div>
-				{items.map((item) => (
-					<div key={item.id}>
+
+			<List
+				values={items}
+				onChange={handleSort}
+				renderList={({ children, props }) => (
+					<ul {...props}>{children}</ul>
+				)}
+				renderItem={({ value, props: { key, ...otherProps } }) => (
+					<li key={key} {...otherProps}>
 						<Item
-							item={item}
+							item={value}
 							onToggle={(isChecked) =>
-								handleToggleItem(item.id, isChecked)
+								handleToggleItem(value.id, isChecked)
 							}
 						/>
-					</div>
-				))}
-			</div>
+					</li>
+				)}
+			/>
 
 			<div>
 				<button type='button' onClick={openAddItemForm}>

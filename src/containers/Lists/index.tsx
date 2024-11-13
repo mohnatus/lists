@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { List, arrayMove } from 'react-movable';
 
-import { useActiveLists, useAddList } from '@/db/hooks';
+import { useActiveLists, useAddList, useSortLists } from '@/db/hooks';
 import { TListFormData } from '@/types';
-import { ListForm } from '@/components/ListForm';
-import { List } from '@/components/List';
+import { ListForm } from '@/containers/Lists/ListForm';
+import { ListItem } from '@/containers/Lists/ListItem';
 
 export const Lists = () => {
-	const lists = useActiveLists();
 	const addList = useAddList();
+	const sortLists = useSortLists();
+
+	const lists = useActiveLists();
+
 	const [isAddListFormOpen, setIsAddListFormOpen] = useState(false);
 
 	const openAddListForm = () => {
@@ -23,15 +27,29 @@ export const Lists = () => {
 		}
 	};
 
+	const handleSort = ({ oldIndex, newIndex }) => {
+		try {
+			const newList = arrayMove(lists, oldIndex, newIndex);
+			sortLists(newList.map((list) => list.id));
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	return (
 		<div>
-			<div>
-				{lists.map((list) => (
-					<div key={list.id}>
-						<List list={list} />
-					</div>
-				))}
-			</div>
+			<List
+				values={lists}
+				onChange={handleSort}
+				renderList={({ children, props }) => (
+					<ul {...props}>{children}</ul>
+				)}
+				renderItem={({ value, props: { key, ...otherProps } }) => (
+					<li key={key} {...otherProps}>
+						<ListItem list={value} />
+					</li>
+				)}
+			/>
 
 			<div>
 				<button type='button' onClick={openAddListForm}>
