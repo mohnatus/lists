@@ -6,7 +6,10 @@ import { TItemData, TListData } from '../types';
 import { db } from '..';
 
 export function useListData(listId: number) {
-	const list = useLiveQuery(() => db.lists.where({ id: listId }).first());
+	const list = useLiveQuery(
+		() => db.lists.where({ id: listId }).first(),
+		[listId]
+	);
 
 	return list;
 }
@@ -21,8 +24,9 @@ export function useListItems(listId: number) {
 }
 
 export function useListSublists(listId: number) {
-	const lists = useLiveQuery(() =>
-		db.lists.where('parent').equals(listId).sortBy('order')
+	const lists = useLiveQuery(
+		() => db.lists.where('parent').equals(listId).sortBy('order'),
+		[listId]
 	);
 
 	useEffect(() => {

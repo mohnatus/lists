@@ -15,6 +15,7 @@ export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
 			<button type='button' onClick={onClose}>
 				Close
 			</button>
+			
 			<Lists />
 		</aside>
 	);

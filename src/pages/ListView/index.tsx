@@ -10,6 +10,7 @@ import {
 	useListItems,
 	useListSublists,
 	useSortItems,
+	useSortLists,
 	useToggleItem,
 } from '@/db/hooks';
 import { TListData } from '@/db/types';
@@ -28,6 +29,7 @@ export const ListView = () => {
 	const toggleItem = useToggleItem();
 	const sortItems = useSortItems();
 	const addSublist = useAddSublist();
+	const sortLists = useSortLists();
 
 	const list = useListData(listId);
 	const sublists = useListSublists(listId);
@@ -67,7 +69,7 @@ export const ListView = () => {
 		}
 	};
 
-	const handleSort = async ({ oldIndex, newIndex }) => {
+	const handleSortItems = async ({ oldIndex, newIndex }) => {
 		try {
 			const newItems = arrayMove(items, oldIndex, newIndex);
 			await sortItems(newItems.map((item) => item.id));
@@ -85,12 +87,21 @@ export const ListView = () => {
 		}
 	};
 
+	const handleSortSublists = async ({ oldIndex, newIndex }) => {
+		try {
+			const newSublists = arrayMove(sublists, oldIndex, newIndex);
+			await sortLists(newSublists.map((item) => item.id));
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	useEffect(() => {
 		if (!sublists.length) {
 			setActiveSublistId(0);
 			return;
 		}
-		if (activeSublistId) {
+		if (activeSublistId && sublists.some(list => list.id === activeSublistId)) {
 			return;
 		}
 
@@ -130,7 +141,7 @@ export const ListView = () => {
 				<div>
 					<List
 						values={sublists}
-						onChange={handleSort}
+						onChange={handleSortSublists}
 						renderList={({ children, props }) => (
 							<ul {...props}>{children}</ul>
 						)}
@@ -154,12 +165,12 @@ export const ListView = () => {
 
 			<List
 				values={items}
-				onChange={handleSort}
+				onChange={handleSortItems}
 				renderList={({ children, props }) => (
 					<ul {...props}>{children}</ul>
 				)}
 				renderItem={({ value, props: { key, ...otherProps } }) => (
-					<li key={key} {...otherProps}>
+					<li key={value.id} {...otherProps}>
 						<Item
 							item={value}
 							onToggle={(isChecked) =>

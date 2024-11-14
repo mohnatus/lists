@@ -10,8 +10,10 @@ type TSublistItemProps = {
 
 export const SublistItem = ({ isActive, list, onClick }: TSublistItemProps) => {
 	return (
-		<div onClick={onClick}>
-			{isActive && 'active'} {list.name}
+		<div style={{ padding: '20px' }} onClick={onClick}>
+			<button type='button'>
+				{isActive && 'active'} {list.name}
+			</button>
 		</div>
 	);
 };
