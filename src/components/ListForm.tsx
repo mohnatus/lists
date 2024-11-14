@@ -15,6 +15,7 @@ export const ListForm = ({ onSubmit }: TListFormProps) => {
 		const data: TListFormData = {
 			name,
 		};
+		
 		onSubmit(data);
 	};
 

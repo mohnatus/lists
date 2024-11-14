@@ -3,7 +3,7 @@ import { List, arrayMove } from 'react-movable';
 
 import { useActiveLists, useAddList, useSortLists } from '@/db/hooks';
 import { TListFormData } from '@/types';
-import { ListForm } from '@/containers/Lists/ListForm';
+import { ListForm } from '@/components/ListForm';
 import { ListItem } from '@/containers/Lists/ListItem';
 
 export const Lists = () => {

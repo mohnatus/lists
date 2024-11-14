@@ -1,11 +1,15 @@
 export type TList = {
 	id: number;
 	name: string;
-  order: number;
+	order: number;
+	parent: number;
+	isDefault: boolean
 };
 
 export type TListData = {
-	[K in Exclude<keyof TList, 'id' | 'order'>]: TList[K];
+	[K in Exclude<keyof TList, 'id' | 'order' | 'isDefault' | 'parent'>]: TList[K];
+} & {
+	parent?: TList['parent']
 };
 
 export type TItem = {

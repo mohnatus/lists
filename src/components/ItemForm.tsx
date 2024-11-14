@@ -15,6 +15,7 @@ export const ItemForm = ({ onSubmit }: TItemFormProps) => {
 		const data: TItemFormData = {
 			name,
 		};
+		
 		onSubmit(data);
 	};
 
