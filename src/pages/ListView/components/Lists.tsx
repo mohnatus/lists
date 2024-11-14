@@ -4,7 +4,7 @@ import { List, arrayMove } from 'react-movable';
 import { useActiveLists, useAddList, useSortLists } from '@/db/hooks';
 import { TListFormData } from '@/types';
 import { ListForm } from '@/components/ListForm';
-import { ListItem } from '@/containers/Lists/ListItem';
+import { ListItem } from '@/components/ListItem';
 
 export const Lists = () => {
 	const addList = useAddList();
@@ -20,7 +20,7 @@ export const Lists = () => {
 
 	const handleAddList = async (data: TListFormData) => {
 		try {
-			const id = await addList(data);
+			await addList(data);
 			setIsAddListFormOpen(false);
 		} catch (e) {
 			console.error(e);

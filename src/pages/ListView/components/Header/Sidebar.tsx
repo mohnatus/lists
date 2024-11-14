@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Lists } from '@/containers/Lists';
+import { Lists } from '@/pages/ListView/components/Lists';
 
 type TSidebarProps = {
 	isOpen: boolean;
@@ -15,7 +15,7 @@ export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
 			<button type='button' onClick={onClose}>
 				Close
 			</button>
-			
+
 			<Lists />
 		</aside>
 	);
