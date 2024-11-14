@@ -7,3 +7,11 @@ export type TListFormData = {
 export type TItemFormData = {
 	name: string;
 };
+
+export type TSortHandler = ({
+	oldIndex,
+	newIndex,
+}: {
+	oldIndex: number;
+	newIndex: number;
+}) => void;

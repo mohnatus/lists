@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { arrayMove, List } from 'react-movable';
 
-import { useAddSublist, useListSublists, useSortLists } from '@/db/hooks';
-import { SublistItem } from '@/components/SublistItem';
+import { useAddSublist, useListSublists } from '@/db/hooks';
 import { TListData } from '@/db/types';
 import { ListForm } from '@/components/ListForm';
+import { ListsSorter } from '@/components/ListsSorter/ListsSorter';
+
+import { Item } from './Item';
+
+import * as s from './styles.module.scss';
 
 type TSublistsProps = {
 	listId: number;
@@ -13,21 +16,12 @@ type TSublistsProps = {
 };
 
 export const Sublists = ({ listId, activeId, onSelect }: TSublistsProps) => {
-	const sortLists = useSortLists();
 	const addSublist = useAddSublist();
 
 	const sublists = useListSublists(listId);
 
 	const [isAddSublistFormOpen, setIsAddSublistFormOpen] = useState(false);
-
-	const handleSortSublists = async ({ oldIndex, newIndex }) => {
-		try {
-			const newSublists = arrayMove(sublists, oldIndex, newIndex);
-			await sortLists(newSublists.map((item) => item.id));
-		} catch (e) {
-			console.error(e);
-		}
-	};
+	const [isSorterOpen, setIsSorterOpen] = useState(false);
 
 	const handleAddSublist = async (data: TListData) => {
 		try {
@@ -56,25 +50,32 @@ export const Sublists = ({ listId, activeId, onSelect }: TSublistsProps) => {
 
 	return (
 		<div>
-			<h2>Подсписки</h2>
+			<h2>
+				Подсписки{' '}
+				<button type='button' onClick={() => setIsSorterOpen(true)}>
+					Сортировать
+				</button>
+			</h2>
+
+			{isSorterOpen && (
+				<ListsSorter
+					lists={sublists}
+					onClose={() => setIsSorterOpen(false)}
+				/>
+			)}
 
 			<div>
-				<List
-					values={sublists}
-					onChange={handleSortSublists}
-					renderList={({ children, props }) => (
-						<ul {...props}>{children}</ul>
-					)}
-					renderItem={({ value, props: { key, ...otherProps } }) => (
-						<li key={key} {...otherProps}>
-							<SublistItem
-								isActive={activeId === value.id}
-								list={value}
-								onClick={() => onSelect(value.id)}
+				<div className={s.List}>
+					{sublists.map((list) => (
+						<div className={s.Item} key={list.id}>
+							<Item
+								isActive={activeId === list.id}
+								list={list}
+								onClick={() => onSelect(list.id)}
 							/>
-						</li>
-					)}
-				/>
+						</div>
+					))}
+				</div>
 			</div>
 
 			<button type='button' onClick={openSublistForm}>
