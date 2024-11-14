@@ -1,6 +1,7 @@
 export type TList = {
 	id: number;
 	name: string;
+	color: string;
 	order: number;
 	parent: number;
 	isDefault: boolean

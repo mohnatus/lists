@@ -3,7 +3,6 @@ import { arrayMove, List } from 'react-movable';
 
 import { TList } from '@/db/types';
 import { useSortLists } from '@/db/hooks';
-import { ListItem } from '@/components/ListItem';
 
 type TListsSorterProps = {
 	lists: TList[];

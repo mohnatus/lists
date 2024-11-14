@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import type { TItemFormData } from '@/types';
+import { TItem } from '@/db/types';
 
 type TItemFormProps = {
-	onSubmit: (data: TItemFormData) => void;
+	item?: TItem;
+	onSubmit: (data: TItemFormData, id?: number) => void;
 };
 
-export const ItemForm = ({ onSubmit }: TItemFormProps) => {
+export const ItemForm = ({ item, onSubmit }: TItemFormProps) => {
 	const [name, setName] = useState('');
 
 	const handleSubmit = (e) => {
@@ -15,9 +17,13 @@ export const ItemForm = ({ onSubmit }: TItemFormProps) => {
 		const data: TItemFormData = {
 			name,
 		};
-		
-		onSubmit(data);
+
+		onSubmit(data, item?.id);
 	};
+
+	useEffect(() => {
+		setName(item?.name || '');
+	}, [item]);
 
 	return (
 		<form onSubmit={handleSubmit}>

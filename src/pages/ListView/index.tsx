@@ -1,23 +1,7 @@
-import React, { act, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { List, arrayMove } from 'react-movable';
 
-import { TItemFormData } from '@/types';
-import {
-	useAddItem,
-	useAddSublist,
-	useListData,
-	useListItems,
-	useListSublists,
-	useSortItems,
-	useSortLists,
-	useToggleItem,
-} from '@/db/hooks';
-import { TListData } from '@/db/types';
-import { Item } from '@/components/Item';
-import { ItemForm } from '@/components/ItemForm';
-
-import { ListForm } from '../../components/ListForm';
+import { useListData } from '@/db/hooks';
 
 import { Header } from './components/Header';
 import { Sublists } from './components/Sublists';
@@ -30,6 +14,10 @@ export const ListView = () => {
 	const list = useListData(listId);
 
 	const [activeSublistId, setActiveSublistId] = useState(0);
+
+	useEffect(() => {
+		document.documentElement.style.setProperty('--theme', list?.color);
+	}, [list]);
 
 	if (list === undefined) {
 		return <div>Loading...</div>;

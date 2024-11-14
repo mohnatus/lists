@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import { db } from '..';
+import { TItemData } from '../types';
 
 export function useToggleItem() {
 	const toggleItem = useCallback(
@@ -11,4 +12,12 @@ export function useToggleItem() {
 	);
 
 	return toggleItem;
+}
+
+export function useEditItem() {
+	const editItem = useCallback(async (id: number, listData: TItemData) => {
+		await db.items.update(id, listData);
+	}, [])
+
+	return editItem
 }

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 import { TListFormData } from '@/types';
-import { useActiveLists, useAddList } from '@/db/hooks';
+import { useActiveLists, useAddList, useEditList } from '@/db/hooks';
 import { ListsSorter } from '@/components/ListsSorter/ListsSorter';
 import { ListItem } from '@/components/ListItem';
 import { ListForm } from '@/components/ListForm';
 
 import * as s from './styles.module.scss';
+import { TList } from '@/db/types';
 
 type TSidebarProps = {
 	isOpen: boolean;
@@ -17,18 +18,26 @@ export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
 	const lists = useActiveLists();
 
 	const addList = useAddList();
+	const editList = useEditList();
 
 	const [isSorterOpen, setIsSorterOpen] = useState(false);
-	const [isAddListFormOpen, setIsAddListFormOpen] = useState(false);
+	const [isListFormOpen, setIsListFormOpen] = useState(false);
+	const [editedList, setEditedList] = useState(null);
 
 	const openAddListForm = () => {
-		setIsAddListFormOpen(true);
+		setEditedList(null);
+		setIsListFormOpen(true);
 	};
 
-	const handleAddList = async (data: TListFormData) => {
+	const openEditListForm = (list: TList) => {
+		setEditedList(list);
+		setIsListFormOpen(true);
+	};
+
+	const handleSubmit = async (data: TListFormData, id?: number) => {
 		try {
-			await addList(data);
-			setIsAddListFormOpen(false);
+			(await id) ? editList(id, data) : addList(data);
+			setIsListFormOpen(false);
 		} catch (e) {
 			console.error(e);
 		}
@@ -53,7 +62,10 @@ export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
 
 			{lists.map((list) => (
 				<div key={list.id}>
-					<ListItem list={list} />
+					<ListItem
+						list={list}
+						onEdit={() => openEditListForm(list)}
+					/>
 				</div>
 			))}
 
@@ -63,7 +75,9 @@ export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
 				</button>
 			</div>
 
-			{isAddListFormOpen && <ListForm onSubmit={handleAddList} />}
+			{isListFormOpen && (
+				<ListForm list={editedList} onSubmit={handleSubmit} />
+			)}
 		</aside>
 	);
 };
