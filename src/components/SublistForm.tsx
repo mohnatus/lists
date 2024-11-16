@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-import { TListFormData } from '@/types';
+import { TSublistFormData } from '@/types';
 import { TList } from '@/db/types';
 
-type TListFormProps = {
+type TSublistFormProps = {
 	list?: TList;
-
-	onSubmit: (data: TListFormData, id?: number) => void;
+	onSubmit: (data: TSublistFormData, id?: number) => void;
 };
 
-export const ListForm = ({ list, onSubmit }: TListFormProps) => {
+export const SublistForm = ({ list, onSubmit }: TSublistFormProps) => {
 	const [name, setName] = useState('');
-	const [color, setColor] = useState('#FF0000');
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const data: TListFormData = {
+		const data: TSublistFormData = {
 			name,
-			color,
 		};
 
 		onSubmit(data, list?.id);
@@ -26,7 +23,6 @@ export const ListForm = ({ list, onSubmit }: TListFormProps) => {
 
 	useEffect(() => {
 		setName(list?.name || '');
-		setColor(list?.color || '');
 	}, [list]);
 
 	return (
@@ -35,13 +31,6 @@ export const ListForm = ({ list, onSubmit }: TListFormProps) => {
 				name='name'
 				value={name}
 				onChange={(e) => setName(e.target.value)}
-			/>
-
-			<input
-				name='color'
-				type='color'
-				value={color}
-				onChange={(e) => setColor(e.target.value)}
 			/>
 		</form>
 	);

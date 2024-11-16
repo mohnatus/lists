@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 
-import { TItemData, TListData } from '../types';
+import { TItemData, TListData, TSublistData } from '../types';
 
 import { db } from '..';
 
@@ -48,15 +48,16 @@ export function useListSublists(listId: number) {
 
 export function useAddSublist() {
 	const addSublist = useCallback(
-		async (listData: TListData, parent: number) => {
-			const lastList = (
+		async (listData: TSublistData, parent: number) => {
+			const lastSublist = (
 				await db.lists.where({ parent }).sortBy('order')
 			).pop();
 
 			const id = await db.lists.add({
 				...listData,
+				color: undefined,
 				parent,
-				order: lastList?.order + 1 || 0,
+				order: lastSublist?.order + 1 || 0,
 				isDefault: false,
 			});
 			return id;
