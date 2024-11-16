@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import { TListFormData } from '@/types';
+import { TList } from '@/db/types';
 import { useActiveLists, useAddList, useEditList } from '@/db/hooks';
 import { ListsSorter } from '@/components/ListsSorter/ListsSorter';
 import { ListItem } from '@/components/ListItem';
 import { ListForm } from '@/components/ListForm';
 
 import * as s from './styles.module.scss';
-import { TList } from '@/db/types';
 
 type TSidebarProps = {
 	isOpen: boolean;

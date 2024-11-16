@@ -1,9 +1,11 @@
 :root {
-  --sidebar-z-index: 100;
+	--sidebar-z-index: 100;
+	--theme-color: var(--list-color, teal);
+	--theme-contrast: var(--list-contrast, white);
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }

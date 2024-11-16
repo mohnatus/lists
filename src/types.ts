@@ -5,6 +5,10 @@ export type TListFormData = {
 	color: string;
 };
 
+export type TSublistFormData = {
+	name: string;
+}
+
 export type TItemFormData = {
 	name: string;
 };

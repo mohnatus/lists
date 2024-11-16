@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useAddSublist, useEditList, useListSublists } from '@/db/hooks';
 import { TList, TListData } from '@/db/types';
-import { ListForm } from '@/components/ListForm';
+import { SublistForm } from '@/components/SublistForm';
 import { ListsSorter } from '@/components/ListsSorter/ListsSorter';
 
 import { Item } from './Item';
@@ -99,11 +99,7 @@ export const Sublists = ({ listId, activeId, onSelect }: TSublistsProps) => {
 			</button>
 
 			{isSublistFormOpen && (
-				<ListForm
-					forSublist
-					list={editedSublist}
-					onSubmit={handleSubmit}
-				/>
+				<SublistForm list={editedSublist} onSubmit={handleSubmit} />
 			)}
 		</div>
 	);

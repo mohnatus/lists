@@ -6,6 +6,7 @@ import { useListData } from '@/db/hooks';
 import { Header } from './components/Header';
 import { Sublists } from './components/Sublists';
 import { Items } from './components/Items';
+import { getContrastYIQ } from '@/utils/getContrastColor';
 
 export const ListView = () => {
 	const params = useParams();
@@ -16,7 +17,20 @@ export const ListView = () => {
 	const [activeSublistId, setActiveSublistId] = useState(0);
 
 	useEffect(() => {
-		document.documentElement.style.setProperty('--theme', list?.color);
+		if (list?.color) {
+			document.documentElement.style.setProperty(
+				'--list-color',
+				list.color
+			);
+
+			document.documentElement.style.setProperty(
+				'--list-contrast',
+				getContrastYIQ(list.color)
+			);
+		} else {
+			document.documentElement.style.removeProperty('--list-color');
+			document.documentElement.style.removeProperty('--list-contrast');
+		}
 	}, [list]);
 
 	if (list === undefined) {

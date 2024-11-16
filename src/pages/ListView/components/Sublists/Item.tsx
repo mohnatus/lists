@@ -11,9 +11,11 @@ type TItemProps = {
 export const Item = ({ isActive, list, onClick }: TItemProps) => {
 	return (
 		<div style={{ padding: '20px' }} onClick={onClick}>
-			<button type='button'>
+			<span>
 				{isActive && 'active'} {list.name}
-			</button>
+			</span>
+
+			<div data-movable-handle>handle</div>
 		</div>
 	);
 };

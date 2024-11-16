@@ -4,13 +4,20 @@ export type TList = {
 	color: string;
 	order: number;
 	parent: number;
-	isDefault: boolean
+	isDefault: boolean;
 };
 
 export type TListData = {
-	[K in Exclude<keyof TList, 'id' | 'order' | 'isDefault' | 'parent'>]: TList[K];
+	[K in Exclude<
+		keyof TList,
+		'id' | 'order' | 'isDefault' | 'parent'
+	>]: TList[K];
 } & {
-	parent?: TList['parent']
+	parent?: TList['parent'];
+};
+
+export type TSublistData = {
+	[K in Exclude<keyof TListData, 'color'>]: TListData[K];
 };
 
 export type TItem = {

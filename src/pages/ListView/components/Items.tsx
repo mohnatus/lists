@@ -64,6 +64,7 @@ export const Items = ({ listId }: TItemsProps) => {
 			<List
 				values={items}
 				onChange={handleSortItems}
+        
 				renderList={({ children, props }) => (
 					<ul {...props}>{children}</ul>
 				)}
