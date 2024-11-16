@@ -68,6 +68,14 @@ export function useAddSublist() {
 	return addSublist;
 }
 
+export function useEditSublist() {
+	const editList = useCallback(async (id: number, listData: TSublistData) => {
+		await db.lists.update(id, listData);
+	}, [])
+
+	return editList
+}
+
 export function useEditList() {
 	const editList = useCallback(async (id: number, listData: TListData) => {
 		await db.lists.update(id, listData);

@@ -75,9 +75,12 @@ export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
 				</button>
 			</div>
 
-			{isListFormOpen && (
-				<ListForm list={editedList} onSubmit={handleSubmit} />
-			)}
+			<ListForm
+				isOpen={isListFormOpen}
+				list={editedList}
+				onSubmit={handleSubmit}
+				onClose={() => setIsListFormOpen(false)}
+			/>
 		</aside>
 	);
 };

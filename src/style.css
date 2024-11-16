@@ -9,3 +9,14 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+}
+
+#modals {
+  position: relative;
+  z-index: 2;
+}

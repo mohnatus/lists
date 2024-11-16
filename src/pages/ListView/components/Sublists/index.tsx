@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { useAddSublist, useEditList, useListSublists } from '@/db/hooks';
-import { TList, TListData } from '@/db/types';
+import { useAddSublist,  useEditSublist, useListSublists } from '@/db/hooks';
+import { TList, TSublistData } from '@/db/types';
 import { SublistForm } from '@/components/SublistForm';
 import { ListsSorter } from '@/components/ListsSorter/ListsSorter';
 
 import { Item } from './Item';
-
 import * as s from './styles.module.scss';
 
 type TSublistsProps = {
@@ -17,7 +16,7 @@ type TSublistsProps = {
 
 export const Sublists = ({ listId, activeId, onSelect }: TSublistsProps) => {
 	const addSublist = useAddSublist();
-	const editSublist = useEditList();
+	const editSublist = useEditSublist();
 
 	const sublists = useListSublists(listId);
 
@@ -25,7 +24,7 @@ export const Sublists = ({ listId, activeId, onSelect }: TSublistsProps) => {
 	const [editedSublist, setEditedSublist] = useState(null);
 	const [isSorterOpen, setIsSorterOpen] = useState(false);
 
-	const handleSubmit = async (data: TListData, id?: number) => {
+	const handleSubmit = async (data: TSublistData, id?: number) => {
 		try {
 			await (id ? editSublist(id, data) : addSublist(data, listId));
 			setIsSublistFormOpen(false);
