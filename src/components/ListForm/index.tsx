@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { TListFormData } from '@/types';
 import { TList } from '@/db/types';
 import { Modal } from '@/components/Modal';
+import { getContrastYIQ } from '@/utils/getContrastColor';
 
 import * as s from './styles.module.scss';
-import { getContrastYIQ } from '@/utils/getContrastColor';
 
 type TListFormProps = {
 	isOpen: boolean;

@@ -21,17 +21,18 @@ export function useAddList() {
 			...listData,
 			order: lastList?.order + 1 || 0,
 			parent: 0,
-      isDefault: false,
+			isDefault: false,
 		});
 
-		const id = await db.lists.add({
+		await db.lists.add({
 			name: 'Без названия',
 			order: 0,
 			parent: listId,
-      isDefault: true
+			isDefault: true,
+			color: undefined,
 		});
 
-		return id;
+		return listId;
 	}, []);
 
 	return addList;

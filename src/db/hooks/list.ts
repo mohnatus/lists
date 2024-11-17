@@ -24,7 +24,10 @@ export function useListItems(listId: number) {
 }
 
 export function useListSublists(listId: number) {
-	const list = useLiveQuery(() => db.lists.where({ id: listId }).first(), [listId]);
+	const list = useLiveQuery(
+		() => db.lists.where({ id: listId }).first(),
+		[listId]
+	);
 
 	const lists = useLiveQuery(
 		() => db.lists.where('parent').equals(listId).sortBy('order'),
@@ -38,7 +41,7 @@ export function useListSublists(listId: number) {
 				parent: listId,
 				order: 0,
 				isDefault: true,
-				color: list.color
+				color: list.color,
 			});
 		}
 	}, [list, lists]);
@@ -71,17 +74,18 @@ export function useAddSublist() {
 export function useEditSublist() {
 	const editList = useCallback(async (id: number, listData: TSublistData) => {
 		await db.lists.update(id, listData);
-	}, [])
+	}, []);
 
-	return editList
+	return editList;
 }
 
 export function useEditList() {
 	const editList = useCallback(async (id: number, listData: TListData) => {
 		await db.lists.update(id, listData);
-	}, [])
+		return id;
+	}, []);
 
-	return editList
+	return editList;
 }
 
 export function useAddItem() {

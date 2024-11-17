@@ -1,57 +1,48 @@
 import React, { useState } from 'react';
 
-import { TListFormData } from '@/types';
-import { TList } from '@/db/types';
-import { useActiveLists, useAddList, useEditList } from '@/db/hooks';
+import { useActiveLists } from '@/db/hooks';
 import { ListsSorter } from '@/components/ListsSorter/ListsSorter';
 import { ListItem } from '@/components/ListItem';
-import { ListForm } from '@/components/ListForm';
 
 import * as s from './styles.module.scss';
 
 type TSidebarProps = {
 	isOpen: boolean;
 	onClose: () => void;
+	onAdd: () => void;
+	onEdit: () => void;
 };
 
-export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
+export const Sidebar = ({ isOpen, onClose, onAdd, onEdit }: TSidebarProps) => {
 	const lists = useActiveLists();
 
-	const addList = useAddList();
-	const editList = useEditList();
-
 	const [isSorterOpen, setIsSorterOpen] = useState(false);
-	const [isListFormOpen, setIsListFormOpen] = useState(false);
-	const [editedList, setEditedList] = useState(null);
-
-	const openAddListForm = () => {
-		setEditedList(null);
-		setIsListFormOpen(true);
-	};
-
-	const openEditListForm = (list: TList) => {
-		setEditedList(list);
-		setIsListFormOpen(true);
-	};
-
-	const handleSubmit = async (data: TListFormData, id?: number) => {
-		try {
-			(await id) ? editList(id, data) : addList(data);
-			setIsListFormOpen(false);
-		} catch (e) {
-			console.error(e);
-		}
-	};
 
 	return (
 		<aside className={[s.Sidebar, isOpen ? s.Open : ''].join(' ')}>
-			<button type='button' onClick={onClose}>
-				Close
-			</button>
+			<div>
+				<button type='button' onClick={onClose}>
+					Close
+				</button>
+			</div>
 
-			<button type='button' onClick={() => setIsSorterOpen(true)}>
-				Resort
-			</button>
+			<div>
+				<button type='button' onClick={() => setIsSorterOpen(true)}>
+					Resort 
+				</button>
+			</div>
+
+			<div>
+				<button type='button' onClick={onAdd}>
+					Add list
+				</button>
+			</div>
+
+			<div>
+				<button type='button' onClick={onEdit}>
+					Edit current list
+				</button>
+			</div>
 
 			{isSorterOpen && (
 				<ListsSorter
@@ -62,25 +53,9 @@ export const Sidebar = ({ isOpen, onClose }: TSidebarProps) => {
 
 			{lists.map((list) => (
 				<div key={list.id}>
-					<ListItem
-						list={list}
-						onEdit={() => openEditListForm(list)}
-					/>
+					<ListItem list={list} />
 				</div>
 			))}
-
-			<div>
-				<button type='button' onClick={openAddListForm}>
-					Add list
-				</button>
-			</div>
-
-			<ListForm
-				isOpen={isListFormOpen}
-				list={editedList}
-				onSubmit={handleSubmit}
-				onClose={() => setIsListFormOpen(false)}
-			/>
 		</aside>
 	);
 };

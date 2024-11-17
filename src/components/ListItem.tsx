@@ -2,20 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { TList } from '@/db/types';
+import { getListRoute } from '@/utils/getListRoute';
 
 type TListProps = {
 	list: TList;
-	onEdit: () => void;
 };
 
-export const ListItem = ({ list, onEdit }: TListProps) => {
+export const ListItem = ({ list }: TListProps) => {
 	return (
 		<div>
-			<Link to={`/list/${list.id}`}>{list.name}</Link>
-			
-			<button type='button' onClick={onEdit}>
-				Edit
-			</button>
+			<Link to={getListRoute(list.id)}>{list.name}</Link>
 		</div>
 	);
 };
